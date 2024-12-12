@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,41 +7,61 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp124
 {
-    public class Student
+    public class UserAccount
     {
-       
- public string id;
-        public string name;
-        public double mark;
-    }
-    public class Program
-    {
-        public static void Main(string[] args)
+public string Email { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public UserAccount(string email, string username, string password)
         {
-            List<Student> studentd = new List<Student>();
-            Console.WriteLine("Enter the number (5-10) ");
-            int SS = int.Parse(Console.ReadLine());
-            for (int i = 0; i < SS; i++)
+            Email = email;
+            Username = username;
+            Password = password;
+        }
+        //********************************************************************
+        public UserAccount(UserAccount cont)
+        {
+            Email = cont.Email;
+            Username = cont.Username;
+            Password = cont.Password;
+        }
+    }
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            ArrayList accounts = new ArrayList();
+            //****************************************************
+            accounts.Add(new UserAccount("user1@gmail.com", "user1",
+            "password1"));
+            accounts.Add(new UserAccount("user2@gmail.com", "user2",
+            "password2"));
+            accounts.Add(new UserAccount("user3@gmail.com", "user3",
+            "password3"));
+            //*********************************************************
+            Console.WriteLine("Enter Username:");
+            string inputUsername = Console.ReadLine();
+            Console.WriteLine("Enter Password:");
+            string inputPassword = Console.ReadLine();
+            //**********************************************************
+            bool inValid = false;
+            foreach (UserAccount account in accounts)
             {
-                Console.WriteLine("***************");
-                Console.Write("Enter ID: ");
-                string id = Console.ReadLine();
-                Console.Write("Enter name: ");
-                string name = Console.ReadLine();
-                Console.Write("Enter mark: ");
-                double mark = double.Parse(Console.ReadLine());
-                studentd.Add(new Student { id = id, name = name, mark = mark });
-            }
-            Console.WriteLine("***\nStudents who passed:");
-            foreach (Student student in studentd)
-            {
-                if (student.mark >= 50)
+                if (account.Username == inputUsername && account.Password == inputPassword)
                 {
-                    Console.WriteLine(student.name);
+                    inValid = true;
+                    break;
                 }
+            }
+            if (inValid)
+            {
+                Console.WriteLine("Correct ");
+            }
+            else
+            {
+                Console.WriteLine("Invalid credentials**");
             }
             Console.ReadLine();
         }
     }
 }
-
